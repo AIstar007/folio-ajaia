@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f7f7f4" />
+  <meta name="description" content="Folio — a calm, lightweight shared document workspace." />
+  <title>Folio — Shared workspace</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <button class="brand-row" id="brandHome" type="button" title="Go to workspace home" aria-label="Folio home">
+        <span class="brand-mark">f.</span><span class="brand-name">folio</span><span class="brand-beta">WORKSPACE</span>
+      </button>
+      <button class="primary-button new-doc-button" id="newDocBtn"><span class="plus">＋</span> New document</button>
+      <div class="sidebar-label">WORKSPACE</div>
+      <nav class="nav-list" aria-label="Workspace views">
+        <button class="nav-item active" data-filter="all"><span class="nav-icon">▤</span> All documents <span class="nav-count" id="allCount">0</span></button>
+        <button class="nav-item" data-filter="owned"><span class="nav-icon">◫</span> My documents</button>
+        <button class="nav-item" data-filter="shared"><span class="nav-icon">⇄</span> Shared with me</button>
+        <button class="nav-item" data-filter="starred"><span class="nav-icon">☆</span> Starred</button>
+      </nav>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label recent-label">YOUR LIBRARY</div>
+      <nav class="nav-list library-nav" aria-label="Document library">
+        <button class="nav-item" data-filter="trash"><span class="nav-icon">♲</span> Trash <span class="nav-count muted-count" id="trashCount">0</span></button>
+      </nav>
+      <div class="sidebar-label recent-label">RECENT</div>
+      <div id="sidebarRecent" class="recent-list"><div class="sidebar-empty">Your documents will appear here.</div></div>
+      <div class="sidebar-bottom">
+        <div class="avatar-stack"><span class="avatar avatar-1">A</span><span class="avatar avatar-2">P</span><span class="avatar avatar-3">A</span></div>
+        <div class="sidebar-foot-copy"><strong>Demo workspace</strong><span>3 sample accounts</span></div>
+        <span class="status-dot" title="Local demo"></span>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="breadcrumbs"><button id="breadcrumbHome" type="button" class="breadcrumb-home">Workspace</button><span class="crumb-slash">/</span><strong id="breadcrumbTitle">All documents</strong></div>
+        <div class="topbar-actions">
+          <div class="save-indicator" id="saveIndicator"><span class="save-dot"></span><span id="saveText">All changes saved</span></div>
+          <div class="account-switcher"><span class="account-label">SIGNED IN AS</span><select id="userSelect" aria-label="Switch demo user"></select><span class="user-avatar" id="userAvatar">A</span></div>
+        </div>
+      </header>
+
+      <section class="welcome-view" id="welcomeView">
+        <div class="welcome-topline"><span class="welcome-date" id="welcomeDate">YOUR WORKSPACE</span><span class="secure-note"><span class="secure-dot"></span>Private by default</span></div>
+        <div class="welcome-heading"><div class="eyebrow"><span class="eyebrow-line"></span> YOUR SHARED WORKSPACE</div><h1>Good work starts<br /><em>with a clear page.</em></h1><p>A quieter place for the documents, ideas, and decisions your team shares.</p></div>
+        <div class="welcome-actions"><button class="primary-button" id="welcomeNewBtn"><span>＋</span> Create a document</button><label class="secondary-button upload-button">↥ Import a file<input type="file" id="welcomeUpload" accept=".txt,.md,.markdown,text/plain,text/markdown" hidden /></label></div>
+        <div class="document-section"><div class="section-heading"><div><h2 id="listHeading">Your documents</h2><p id="listSubheading">Pick up where you left off.</p></div><div class="list-tools"><div class="search-box"><span>⌕</span><input type="search" id="searchInput" placeholder="Search documents" aria-label="Search documents" /></div><button class="icon-button" id="refreshBtn" title="Refresh documents" aria-label="Refresh documents">↻</button><button class="secondary-button compact-button" id="newFromListBtn">＋ New</button></div></div><div class="document-grid" id="documentGrid"></div></div>
+        <div class="welcome-footer"><span>FOLIO</span><span>Made for focused work.</span></div>
+      </section>
+
+      <section class="editor-view hidden" id="editorView">
+        <div class="editor-header"><div class="editor-title-wrap"><input id="documentTitle" class="document-title" value="Untitled document" maxlength="160" aria-label="Document title" /><div class="doc-meta"><span class="doc-owner-dot"></span><span id="docMetaText">Owned by you</span><span class="meta-separator">·</span><span id="updatedMeta">Just now</span><span class="meta-separator">·</span><span id="docWordMeta">0 words</span></div></div><div class="editor-header-actions"><button class="secondary-button share-button" id="shareBtn">⇄ <span>Share</span></button><div class="menu-anchor"><button class="icon-button editor-more-button" id="editorMoreBtn" title="More document actions" aria-label="More document actions">•••</button><div class="action-menu editor-action-menu hidden" id="editorActionMenu"><button data-editor-action="download">↓ Download HTML</button><button data-editor-action="text">↓ Download plain text</button><button data-editor-action="print">▤ Print / Save PDF</button><div class="menu-separator"></div><button class="danger-action" data-editor-action="trash">♲ Move to trash</button></div></div><button class="icon-button" id="backBtn" title="Back to documents" aria-label="Back to documents">←</button></div></div>
+        <div class="toolbar" id="toolbar" role="toolbar" aria-label="Text formatting">
+          <select id="formatSelect" class="format-select" aria-label="Text style"><option value="p">Paragraph</option><option value="h1">Heading 1</option><option value="h2">Heading 2</option><option value="h3">Heading 3</option></select>
+          <span class="toolbar-divider"></span>
+          <button class="tool-button" data-command="undo" title="Undo (Ctrl+Z)">↶</button><button class="tool-button" data-command="redo" title="Redo (Ctrl+Y)">↷</button>
+          <span class="toolbar-divider"></span>
+          <button class="tool-button" data-command="bold" title="Bold (Ctrl+B)"><strong>B</strong></button><button class="tool-button italic-tool" data-command="italic" title="Italic (Ctrl+I)">I</button><button class="tool-button underline-tool" data-command="underline" title="Underline (Ctrl+U)">U</button>
+          <select id="fontSizeSelect" class="font-size-select" aria-label="Text size"><option value="3">Normal</option><option value="2">Small</option><option value="4">Large</option><option value="5">Extra large</option></select>
+          <span class="toolbar-divider"></span>
+          <button class="tool-button list-tool" data-command="insertUnorderedList" title="Bulleted list">•≡</button><button class="tool-button list-tool" data-command="insertOrderedList" title="Numbered list">1≡</button>
+          <span class="toolbar-divider"></span>
+          <button class="tool-button quote-tool" data-command="formatBlock" data-value="blockquote" title="Quote">❝</button><button class="tool-button" id="linkBtn" title="Insert link">↗</button><button class="tool-button" data-command="insertHorizontalRule" title="Horizontal rule">—</button><button class="tool-button" id="clearFormatBtn" title="Clear formatting">Tx</button>
+          <span class="toolbar-spacer"></span><span class="read-only-tag hidden" id="readOnlyTag">VIEW ONLY</span>
+        </div>
+        <div class="paper-stage"><article id="editor" class="document-paper" contenteditable="true" spellcheck="true" aria-label="Document content"><p></p></article></div>
+        <div class="editor-footer"><span><span class="footer-lock">▣</span> Only people with access can view this document</span><span id="wordCount">0 words · 0 characters</span></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="shareModal"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="shareTitle"><div class="modal-header"><div><div class="modal-kicker">COLLABORATION</div><h2 id="shareTitle">Share document</h2><p>Invite a teammate to work on this page.</p></div><button class="icon-button modal-close" data-close="shareModal" aria-label="Close sharing dialog">✕</button></div><div class="share-form"><label for="shareEmail">Add people</label><div class="share-input-row"><select id="shareEmail" aria-label="Select teammate"><option value="">Choose a demo user</option></select><select id="shareRole" aria-label="Permission"><option value="viewer">Can view</option><option value="editor">Can edit</option></select><button class="primary-button" id="grantShareBtn">Invite</button></div><p class="form-hint">Demo access is limited to the three seeded accounts.</p></div><div class="people-heading">PEOPLE WITH ACCESS <span id="shareCount">0</span></div><div id="sharePeople" class="share-people"></div><div class="modal-footer"><span>Changes take effect immediately.</span><button class="secondary-button" data-close="shareModal">Done</button></div></section></div>
+
+  <div class="modal-backdrop hidden" id="confirmModal"><section class="modal confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle"><div class="confirm-icon">♲</div><div class="modal-kicker">DOCUMENT MANAGEMENT</div><h2 id="confirmTitle">Move this document to trash?</h2><p id="confirmMessage">You can restore it later from Trash.</p><div class="confirm-actions"><button class="secondary-button" id="cancelConfirmBtn">Cancel</button><button class="primary-button danger-button" id="confirmActionBtn">Move to trash</button></div></section></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
